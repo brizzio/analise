@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>LUNA</title>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container jumbotron">
+        <h1 class="display-4">Posso Ajudar?</h1>
+        <p class="lead">No formulario abaixo, entre com o texto que você gostaria de fazer um resumo...</p>
+        <hr class="my-4">
+        <p>Vamos usar NLP (Natural Language Processing) e um algoritmo comparativo de frequência de termo versus frequência total inversa (TF-IDF) para encontrar as frases mais importantes no texto que você inserir</p>
+        <a class="btn btn-primary btn-lg" href="https://theowlnest.tk" role="button">Saiba mais sobre a LUNA</a>
+      </div>
+      
+      <div class="container" id="result"></div>
+
+      <form class="container" id='frm-txt'>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1"><h1 class="display-4">TEXTO</h1></label>
+          
+          <textarea class="form-control" id="txta" rows="25" placeholder="Cole aqui o texto que deseja analizar..."></textarea>
+        </div>
+        
+      </form>
+
+      <div class="container">
+        <button class="btn btn-primary float-right" id='btn' disabled='true'>RESUMIR TEXTO</button>
+      </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+    <script>
+
+        $(document).ready(function(){
+            console.log('connector ready');
+
+            var url = 'https://script.google.com/macros/s/AKfycbzZYowbp8cUhr4xBecMoaaE85mKW1tD0djMgJSFi8z3f-zSIFzh/exec'
+
+            
+
+            $("#txta").focus(function(){
+              $("#btn").removeAttr("disabled");
+            });
+            
+            $('#btn').on('click', function(e) {
+
+              e.preventDefault();
+
+              var data = {}
+              data.resumir = $('#txta').val(); 
+
+              console.log(data)  
+
+              $.post(url, data, function(result){
+                console.log(JSON.stringify(result))
+                var lista = $("#result")
+
+                lista.append('<ul class="list-group-flush"></ul>');
+                lista.find('ul').append('<li class="list-group-item list-group-item-primary"><h3 class="display-4">Frases mais relevantes</h3></li>')
+                lista.find('ul').append('<li class="list-group-item">' + result.frase1 + '</li>')
+                lista.find('ul').append('<li class="list-group-item">' + result.frase2 + '</li>')
+                lista.find('ul').append('<li class="list-group-item">' + result.frase3 + '</li>')
+              });
+
+          });
+
+        });
+
+
+           
+    
+    </script>  
+
+
+
+
+
+  </body>
+</html>
