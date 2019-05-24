@@ -1,0 +1,2 @@
+# analise
+analiza texto
